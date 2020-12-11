@@ -8,21 +8,25 @@
         active-text-color="#409eff"
         :collapse="isCollapse">
         <!-- 一级菜单 -->
-        <el-submenu v-for="item in items" :index="item.path" :key="item.path">
+        <el-submenu v-for="item in items" :index="item.name" :key="item.path">
           <template slot="title">
             <i :class="item.icon"></i>
             <span>{{item.name}}</span>
           </template>
           <!-- 二级菜单 -->
-          <router-link v-for="(citem,cindex) in item.children" :to="citem.path" :key="cindex">
-            <el-menu-item :index="citem.path">
+          <!-- <router-link v-for="(citem,cindex) in item.children" :to="citem.path" :key="cindex"> -->
+            <el-menu-item v-for="(citem,cindex) in item.children" :index="citem.path" :key="cindex" @click="go(citem.path)">
               <template slot="title">
                 <i :class="citem.icon"></i>
                 <span>{{citem.name}}</span>
               </template>
             </el-menu-item>
-          </router-link>
+          <!-- </router-link> -->
         </el-submenu>
+        <el-menu-item @click="logout">
+          <i class="el-icon-switch-button"></i>
+          <span>退出</span>
+        </el-menu-item>
         <el-menu-item @click="isCollapse = !isCollapse">
           <i class="el-icon-s-operation"></i>
           <span>缩小</span>
@@ -31,9 +35,9 @@
     </el-aside>
     <el-container>
       <el-header height="50px" id="header">
-        <img src="../assets/comical.png">
-        <img src="../assets/comical.png">
-        <!-- <h2>管理端</h2> -->
+        <!-- <img src="/img/comical.png">
+        <img src="/img/comical.png"> -->
+        <h2>管理端</h2>
       </el-header>
       <el-main>
         <router-view></router-view>
@@ -44,30 +48,44 @@
 
 <script>
 export default {
-  name: "index",
   data() {
     return {
       isCollapse: false,
       items: [
         {
-          name: "用户管理",
-          path: "user",
-          icon: 'el-icon-s-custom',
+          name: "图片管理",
+          icon: 'el-icon-picture',
           children: [
-            { path: "userlist", name: "用户列表", icon: 'el-icon-s-data' }
+            { path: "Picture", name: "图片列表", icon: 'el-icon-s-data' },
+            { path: "PicList", name: "图集列表", icon: 'el-icon-s-data' }
           ]
         },
         {
-          name: "xx管理",
-          // path: "user",
+          name: "分类管理",
+          icon: 'el-icon-s-grid',
+          children: [
+            { path: "Category", name: "分类列表", icon: 'el-icon-s-data' }
+          ]
+        },
+        {
+          name: "用户管理",
           icon: 'el-icon-s-custom',
           children: [
-            { path: "img", name: "用户列表", icon: 'el-icon-s-data' }
+            { path: "UserList", name: "用户列表", icon: 'el-icon-s-data' }
           ]
         }
       ]
     }
-  }
+  },
+  methods: {
+    go(path){
+      this.$router.push(path)
+    },
+    logout() {
+      sessionStorage.removeItem("jdAdminToken")
+      this.$router.push('/login')
+    }
+  },
 }
 </script>
 

@@ -3,7 +3,7 @@
     <div class="login_box">
       <!-- 头像区域 -->
       <div class="avatar_box">
-        <img src="../assets/comical.png" alt="">
+        <img src="/img/comical.png" alt="">
       </div>
       <!-- 登录表单区域 -->
       <el-form ref="loginFormRef" :model="loginForm" :rules="loginFormRules" label-width="0px" class="login_form">
@@ -26,7 +26,6 @@
 </template>
 
 <script>
-import {User} from '../utils/api'
 export default {
   data() {
     return {
@@ -58,7 +57,8 @@ export default {
     login() {
       this.$refs.loginFormRef.validate(async valid => {
         if (valid) {
-          let result = await User.adminLogin(this.loginForm.username, this.loginForm.password)
+          let result = await this.$api.User.adminLogin(this.loginForm.username, this.loginForm.password)
+          console.log(result)
           if(result.status === 1688){
             this.$message.success('登录成功')
             // 1. 将登录成功之后的 token，保存到客户端的 sessionStorage 中

@@ -17,24 +17,21 @@
       <el-card v-for="(user,index) in userList" :key="index">
         <!-- 头部信息 -->
         <div slot="header">
-          <span>{{user.nickName}}</span>
+          <span>昵称：{{user.name ? user.name : "无"}}</span>
           <el-button class="delete-btn" type="text" icon="el-icon-delete" @click="handleDelete(user.id)">
-            删除
+            封禁
           </el-button>
         </div>
         <!-- 主题信息 -->
         <div class="user-main">
           <!-- 头像 -->
-          <div><img :src="user.avatar" style="width: 70px;height: 70px;border-radius: 50%;object-fit: cover;"></div>
+          <div><img :src="user.avatar ? user.avatar : '/img/comical.png' " style="width: 70px;height: 70px;border-radius: 50%;object-fit: cover;"></div>
           <!-- 基本信息 -->
           <div class="text">
-            <span>性别：</span><span>{{sex(user.sex)}}</span>
+            <span>账号：</span><span>{{user.account}}</span>
           </div>
           <div class="text">
-            <span>用户名：</span><span>{{user.userName}}</span>
-          </div>
-          <div class="text">
-            <span>电子邮箱：</span><span>{{user.email}}</span>
+            <span>邮箱：</span><span>{{user.email}}</span>
           </div>
         </div>
       </el-card>
@@ -53,7 +50,6 @@
   </div>
 </template>
 <script>
-import {User} from '../../utils/api'
 export default{
   data(){
     return {
@@ -63,42 +59,33 @@ export default{
     }
   },
   methods: {
-    sex(num){
-      switch(num){
-        case 1:
-          return '男'
-        case 2:
-          return '女'
-        case 3:
-          return '不详'
-      }
-    },
     async loadUserList(currentPage){
-      let result = await User.getUserList({
+      let result = await this.$api.User.getUserList({
         currentPage,
         pageSize: this.pageSize
       })
-      this.userList = result.data.data.userList
-      this.total = result.data.data.total
+      console.log(result)
+      this.userList = result.data.userList
+      this.total = result.data.total
     },
     currentPageChange(val){
       this.loadUserList(val)
     },
     handleDelete(userId){
-      this.$confirm('确认删除此用户？','提示',{
+      this.$confirm('确认封禁此用户？','提示',{
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(async () => {
-        let result = await User.deleteUser({userId})
-        if(result.data.meta.status === 1){
-          this.$message.success('删除成功!')
+        // let result = await User.deleteUser({userId})
+        // if(result.data.meta.status === 1688){
+          this.$message.success('封禁成功!')
           this.$router.go(0)
-        }else{
-          this.$message.error(result.data.meta.msg)
-        }
+        // }else{
+        //   this.$message.error(result.msg)
+        // }
       }).catch(() => {
-        this.$message.info('取消删除')
+        this.$message.info('取消封禁')
       })
     }
   },

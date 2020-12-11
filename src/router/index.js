@@ -4,7 +4,9 @@ import Router from 'vue-router'
 import Index from '../pages/Index.vue'
 import Login from '../pages/Login.vue'
 import UserList from '../pages/user/UserList.vue'
-import Img from '../pages/img/index.vue'
+import Picture from '../pages/picture/picture.vue'
+import PicList from '../pages/picture/picList.vue'
+import Category from '../pages/category/category.vue'
 
 Vue.use(Router)
 
@@ -14,9 +16,11 @@ const router =  new Router({
     {path: '/', redirect: '/index'},
     {path: '/index', component: Index,
       children:[
-        {path: '', component: UserList},
-        {path: '/userlist', component: UserList},
-        {path: '/img', component: Img}
+        {path: '', component: Picture},
+        {path: '/Picture', component: Picture},
+        {path: '/PicList', component: PicList},
+        {path: '/Category', component: Category},
+        {path: '/UserList', component: UserList}
       ]
     }
   ]

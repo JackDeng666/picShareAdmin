@@ -13,6 +13,9 @@ function stopLoading(){
 const instance = axios.create({
   baseURL: API_URL
 })
+instance.interceptors.response.use(response=>{
+  return response.data
+})
 
 const request = async json => {
   let {method,url,data,params} = json
