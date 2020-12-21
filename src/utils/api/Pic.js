@@ -14,6 +14,20 @@ class Pic {
       params
     })
   }
+  async updatePicture(data){
+    return await request({
+      method: 'post',
+      url: 'pic/updatePicture',
+      data
+    })
+  }
+  async updatePicList(data){
+    return await request({
+      method: 'post',
+      url: 'pic/updatePicList',
+      data
+    })
+  }
 }
 
 export default new Pic()

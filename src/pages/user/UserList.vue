@@ -1,16 +1,15 @@
 <template>
   <div>
     <!-- 搜索框 -->
-    <!-- <div class="search-box">
+    <div class="search-box">
       <el-input
-        placeholder="可以通过用户名搜索用户..."
+        placeholder="可以通过用户ID或用户名搜索用户..."
         prefix-icon="el-icon-search"
         style="width: 400px"
-        v-model="searchKeyWord"
         size="small">
       </el-input>
       <el-button type="primary" icon="el-icon-search" size="small" style="margin-left: 3px">搜索</el-button>
-    </div> -->
+    </div>
     <!-- 用户列表 -->
     <div class="user-list-box">
       <!-- 用户卡片 -->
@@ -18,7 +17,7 @@
         <!-- 头部信息 -->
         <div slot="header">
           <span>昵称：{{user.name ? user.name : "无"}}</span>
-          <el-button class="delete-btn" type="text" icon="el-icon-delete" @click="handleDelete(user.id)">
+          <el-button class="delete-btn" type="text" icon="el-icon-view" @click="handleDelete(user.id)">
             封禁
           </el-button>
         </div>
