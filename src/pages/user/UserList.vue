@@ -24,7 +24,8 @@
         <!-- 主题信息 -->
         <div class="user-main">
           <!-- 头像 -->
-          <div><img :src="user.avatar ? user.avatar : '/img/comical.png' " style="width: 70px;height: 70px;border-radius: 50%;object-fit: cover;"></div>
+          <!-- <div><img :src="user.avatar ? user.avatar : '/img/comical.png' " style="width: 70px;height: 70px;border-radius: 50%;object-fit: cover;"></div> -->
+          <el-avatar icon="el-icon-user-solid" size="size" :src="user.avatar"></el-avatar>
           <!-- 基本信息 -->
           <div class="text">
             <span>账号：</span><span>{{user.account}}</span>
@@ -65,6 +66,9 @@ export default{
       })
       console.log(result)
       this.userList = result.data.userList
+      // this.userList.forEach(el => {
+      //   el.avatar = this.$basicUrl + el.avatar
+      // })
       this.total = result.data.total
     },
     currentPageChange(val){
